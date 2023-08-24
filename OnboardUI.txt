@@ -1,0 +1,163 @@
+import React from 'react';
+import {View, Text, StyleSheet, StatusBar, Image} from 'react-native';
+
+import AppIntroSlider from 'react-native-app-intro-slider';
+import LinearGradient from 'react-native-linear-gradient';
+import colors from '../assets/colors/colors';
+
+
+ //                                                   DATA
+const data = [
+  {
+    title: 'Distinguish betweens gentle man and lady',
+    image: require('../assets/images/Onboard1.png'),
+  },
+  {
+    title: 'Detection age',
+    image: require('../assets/images/Onboard2.png'),
+  },
+  {
+    title: 'Automation marketing',
+    image: require('../assets/images/Onboard3.png'),
+  },
+];
+
+
+//                                                   Render Item
+const Onboarding = (props) => {
+  const renderItem = ({item}) => {
+    return (
+      <View style={styles.slide}>
+        <Image source={item.image} style={styles.image} />
+        <View>
+          <Text style={styles.title}>{item.title}</Text>
+        </View>
+      </View>
+    );
+  };
+
+  const keyExtractor = (item) => item.title;
+//                                                   Next Button
+  const renderNextButton = () => {
+    return (
+      <View style={styles.rightTextWrapper}>
+        <Text style={styles.rightText}>Next</Text>
+      </View>
+    );
+  };
+//                                                   Prev Button
+  const renderPrevButton = () => {
+    return (
+      <View style={styles.leftTextWrapper}>
+        <Text style={styles.leftText}>Prev</Text>
+      </View>
+    );
+  };
+  //                                                   Done Button
+  const renderDoneButton = () => {
+    return (
+      <LinearGradient
+        colors={['#F70D1A', '#50EBEC']}
+        style={styles.linearGradient}
+        start={{x: 0, y: 0.5}}
+        end={{x: 1, y: 0.5}}
+        style={styles.doneButtonWrapper}>
+        <Text style={styles.doneButtonText}>Let's go</Text>
+      </LinearGradient>
+      // <View style={styles.doneButtonWrapper}>
+      //   <Text style={styles.doneButtonText}>Done</Text>
+      // </View>
+    );
+  };
+
+  
+
+  const handleDone = () => {
+    props.handleDone();
+  };
+
+  return (
+    <View style={{flex: 1}}>
+      <StatusBar translucent backgroundColor="transparent" />
+      <AppIntroSlider
+        keyExtractor={keyExtractor}
+        renderItem={renderItem}
+        data={data}
+        dotStyle={styles.dotStyle}
+        activeDotStyle={styles.activeDotStyle}
+        renderDoneButton={renderDoneButton}
+        renderNextButton={renderNextButton}
+        renderPrevButton={renderPrevButton}
+        showPrevButton
+        onDone={handleDone}
+      />
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  slide: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: colors.white,
+  },
+  image: {
+    marginVertical: 10,
+  },
+  title: {
+    fontSize: 24,
+    color: colors.black,
+    textAlign: 'center',
+    fontFamily: 'OpenSans-Bold',
+    marginHorizontal: 60,
+  },
+  dotStyle: {
+    backgroundColor: colors.blueFaded,
+  },
+  activeDotStyle: {
+    backgroundColor: colors.blue,
+  },
+  rightTextWrapper: {
+    width: 40,
+    height: 40,
+    marginRight: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+    textAlign: 'center',
+  },
+  rightText: {
+    color: colors.blue,
+    fontFamily: 'OpenSans-SemiBold',
+    fontSize: 14,
+  },
+  leftTextWrapper: {
+    width: 40,
+    height: 40,
+    marginLeft: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+    textAlign: 'center',
+  },
+  leftText: {
+    color: colors.blue,
+    fontFamily: 'OpenSans-SemiBold',
+    fontSize: 14,
+  },
+  doneButtonWrapper: {
+    flex: 1,
+    paddingLeft: 35,
+    paddingRight: 50,
+    paddingVertical: 10,
+    borderRadius: 25,
+    marginRight: -40,
+  },
+  doneButtonText: {
+    fontSize: 15,
+    fontFamily: 'OpenSans-SemiBold',
+    textAlign: 'center',
+    color: colors.white,
+  },
+});
+
+export default Onboarding;
